@@ -90,10 +90,10 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Cart */}
+          {/* Cart — desktop only, pill nav has it on mobile */}
           <button
             onClick={toggleCart}
-            className="relative p-1 text-white/60 hover:text-white transition-colors"
+            className="hidden md:block relative p-1 text-white/60 hover:text-white transition-colors"
             aria-label="Open cart"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
