@@ -278,11 +278,9 @@ export default function ContactPage() {
         <div className="absolute inset-x-0 bottom-0 h-20 pointer-events-none bg-gradient-to-t from-black to-transparent" />
 
         {/* Floating info card */}
-        <div className="absolute bottom-10 left-6 sm:left-10 pointer-events-none">
-          <div
-            className="bg-black/80 border border-white/10 backdrop-blur-xl px-7 py-6 flex flex-col gap-4"
-            style={{ minWidth: "260px" }}
-          >
+        <div className="absolute bottom-10 left-4 right-4 sm:left-10 sm:right-auto pointer-events-none">
+          <div className="bg-black/80 border border-white/10 backdrop-blur-xl px-5 sm:px-7 py-5 sm:py-6 flex flex-col gap-3 sm:gap-4 sm:min-w-[260px]">
+
             {/* Store label */}
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-apple-blue animate-pulse shrink-0" />
@@ -305,7 +303,7 @@ export default function ContactPage() {
                 <circle cx="12" cy="12" r="10" />
                 <polyline points="12 6 12 12 16 14" />
               </svg>
-              <span>Mon–Fri 9am–7pm &nbsp;·&nbsp; Sat 9am–6pm &nbsp;·&nbsp; Sun 10am–4pm</span>
+              <span className="leading-relaxed">Mon–Fri 9am–7pm<br className="sm:hidden" /><span className="hidden sm:inline"> · </span> Sat 9am–6pm · Sun 10am–4pm</span>
             </div>
 
             {/* Directions link — re-enable pointer events just for this */}

@@ -144,7 +144,7 @@ export default function SupportPage() {
         <div className="max-w-7xl mx-auto grid sm:grid-cols-3 gap-4">
           {contactOptions.map((opt) => (
             <ScrollReveal3D key={opt.title}>
-              <div className="border border-white/10 p-8 flex flex-col gap-4 hover:border-apple-blue/40 transition-colors">
+              <div className="border border-white/10 p-5 sm:p-8 flex flex-col gap-4 hover:border-apple-blue/40 transition-colors">
                 <span className="text-apple-blue">{opt.icon}</span>
                 <div>
                   <p className="font-bebas text-white text-2xl">{opt.title}</p>
