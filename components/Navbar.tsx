@@ -50,6 +50,7 @@ const pillLinks = [
 ];
 
 const overflowLinks = [
+  { href: "/", label: "Home" },
   { href: "/support", label: "Support" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
@@ -60,7 +61,7 @@ export default function Navbar() {
   const { totalItems, toggleCart } = useCart();
   const [sheetOpen, setSheetOpen] = useState(false);
   const pathname = usePathname();
-  const overflowActive = overflowLinks.some((l) => l.href === pathname);
+  const overflowActive = overflowLinks.some((l) => l.href === pathname && l.href !== "/");
 
   const allDesktopLinks = [...pillLinks, ...overflowLinks];
 
@@ -196,19 +197,28 @@ export default function Navbar() {
           <nav className="flex flex-col gap-1">
             {overflowLinks.map((l) => {
               const active = pathname === l.href;
+              const isHome = l.href === "/";
               return (
                 <Link
                   key={l.href}
                   href={l.href}
                   onClick={() => setSheetOpen(false)}
                   className={`flex items-center justify-between px-4 py-4 rounded-2xl transition-colors ${
-                    active ? "bg-white/08 text-white" : "text-white/50 hover:bg-white/05 hover:text-white"
+                    isHome
+                      ? "text-apple-blue hover:bg-white/05"
+                      : active
+                      ? "bg-white/08 text-white"
+                      : "text-white/50 hover:bg-white/05 hover:text-white"
                   }`}
                 >
                   <span className="font-bebas text-3xl leading-none tracking-wide">{l.label}</span>
-                  {active && (
+                  {isHome ? (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                    </svg>
+                  ) : active ? (
                     <span className="w-1.5 h-1.5 rounded-full bg-apple-blue" />
-                  )}
+                  ) : null}
                 </Link>
               );
             })}
