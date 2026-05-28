@@ -44,10 +44,39 @@ function ProductsContent() {
         </div>
       </div>
 
-      {/* Grid */}
-      <section className="bg-white min-h-screen py-6 px-3 sm:py-14 sm:px-6">
+      {/* Mobile: snap scroll carousel — one card per slide */}
+      <section className="sm:hidden bg-white min-h-screen">
+        {filtered.length === 0 ? (
+          <div className="text-center py-24 text-black/30">
+            <p className="font-bebas text-4xl">No products found</p>
+          </div>
+        ) : (
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide h-[calc(100dvh-7rem)]">
+            {filtered.map((product) => (
+              <div
+                key={product.id}
+                className="snap-center shrink-0 w-full h-full flex flex-col justify-center px-6 py-8"
+              >
+                <ProductCard product={product} />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Slide counter */}
+        {filtered.length > 0 && (
+          <div className="flex justify-center gap-1.5 py-3">
+            {filtered.map((_, i) => (
+              <span key={i} className="w-1 h-1 rounded-full bg-black/20" />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Desktop: grid */}
+      <section className="hidden sm:block bg-white min-h-screen py-14 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-5 sm:gap-y-10">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-10">
             {filtered.map((product, i) => (
               <ScrollReveal3D key={product.id} delay={Math.min(i * 55, 350)} rotateX={16}>
                 <ProductCard product={product} />
