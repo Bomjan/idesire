@@ -67,14 +67,17 @@ export default function HeroSection() {
         {/* ── Text ── */}
         <div
           ref={textRef}
-          className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 h-full flex items-center pt-14
-            justify-center md:justify-start text-center md:text-left"
+          className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 h-full flex
+            items-start md:items-center
+            pt-20 sm:pt-24 md:pt-14
+            justify-center md:justify-start
+            text-center md:text-left"
         >
-          <div className="w-full max-w-[90%] sm:max-w-[75%] lg:max-w-[46%]">
+          <div className="w-full max-w-[92%] sm:max-w-[75%] lg:max-w-[46%]">
 
             {/* Apple icon */}
-            <div className="hero-logo mb-5 sm:mb-7 flex justify-center md:justify-start">
-              <svg viewBox="0 0 814 1000" width="24" height="30" aria-hidden="true"
+            <div className="hero-logo mb-3 sm:mb-5 md:mb-7 flex justify-center md:justify-start">
+              <svg viewBox="0 0 814 1000" width="22" height="27" aria-hidden="true"
                 style={{ fill: "rgba(255,255,255,0.55)" }}>
                 <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1-67.4 0-85.2-39.3-164.5-39.3-76.5 0-103.7 40.8-165.9 40.8-62 0-105-57.8-155.5-127.4C46.7 790.7 0 663 0 541.8c0-207.3 135.3-316.9 269-316.9 71.2 0 130.4 46.3 174.3 46.3 42.7 0 109.6-49 192.7-49 67.3 0 119.1 10 134.6 118.7z"/>
                 <path d="M554.1 88.4C587.5 48.3 608.5 2.2 608.5 0c0-.7-.7-1.3-2.2-1.3-4.5 0-72.3 35.4-106.3 75.9-28 31.2-56.5 85.6-56.5 129.6 0 2.6.6 4.5 2.6 4.5 5.8 0 77.4-32.5 107.9-120.3z"/>
@@ -82,13 +85,13 @@ export default function HeroSection() {
             </div>
 
             {/* Eyebrow */}
-            <p className="hero-eyebrow font-syne text-[10px] font-semibold text-apple-blue uppercase tracking-[0.32em] mb-4 sm:mb-5">
+            <p className="hero-eyebrow font-syne text-[10px] font-semibold text-apple-blue uppercase tracking-[0.32em] mb-3 sm:mb-4 md:mb-5">
               Bhutan&apos;s #1 Apple Authorised Store
             </p>
 
             {/* Headline */}
-            <h1 className="hero-h1 font-bebas leading-[0.90] mb-6 sm:mb-8"
-              style={{ fontSize: "clamp(3rem, 13vw, 9rem)" }}>
+            <h1 className="hero-h1 font-bebas leading-[0.90] mb-4 sm:mb-6 md:mb-8"
+              style={{ fontSize: "clamp(2.8rem, 13vw, 9rem)" }}>
               <span className="text-white block">EXPERIENCE</span>
               <span className="block" style={{
                 background: "linear-gradient(140deg, #ffffff 0%, #c8c8cc 35%, #ffffff 55%, #a8a8ad 100%)",
@@ -96,11 +99,12 @@ export default function HeroSection() {
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
               }}>APPLE.</span>
-              <span className="text-white/22 block">IN BHUTAN.</span>
+              {/* "IN BHUTAN." hidden on small phones — decorative, saves vertical space */}
+              <span className="text-white/22 hidden sm:block">IN BHUTAN.</span>
             </h1>
 
-            {/* Pills — hidden on small mobile */}
-            <div className="hero-pills hidden sm:flex flex-wrap gap-2 mb-8 justify-center md:justify-start">
+            {/* Pills — sm and up only */}
+            <div className="hero-pills hidden sm:flex flex-wrap gap-2 mb-6 md:mb-8 justify-center md:justify-start">
               {["Genuine Devices", "Expert Service", "Nationwide Delivery"].map((label) => (
                 <span key={label}
                   className="font-syne text-[10px] text-white/50 border border-white/12 px-3 py-1.5 rounded-full tracking-wide">
@@ -110,28 +114,18 @@ export default function HeroSection() {
             </div>
 
             {/* CTAs */}
-            <div className="hero-ctas flex flex-col sm:flex-row gap-3 items-center md:items-start">
+            <div className="hero-ctas flex flex-col sm:flex-row gap-2.5 sm:gap-3 items-stretch sm:items-center md:items-start">
               <Link href="/products"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-white text-black text-[11px] font-bold uppercase tracking-widest px-7 py-3.5 hover:bg-apple-gray active:scale-[0.97] transition-all duration-150 font-syne">
+                className="inline-flex items-center justify-center gap-2.5 bg-white text-black text-[11px] font-bold uppercase tracking-widest px-7 py-3 sm:py-3.5 hover:bg-apple-gray active:scale-[0.97] transition-all duration-150 font-syne">
                 Shop Now
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </Link>
               <Link href="/about"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 border border-white/20 text-white text-[11px] font-semibold uppercase tracking-widest px-7 py-3.5 hover:border-white/50 active:scale-[0.97] transition-all duration-150 font-syne">
+                className="inline-flex items-center justify-center gap-2.5 border border-white/20 text-white text-[11px] font-semibold uppercase tracking-widest px-7 py-3 sm:py-3.5 hover:border-white/50 active:scale-[0.97] transition-all duration-150 font-syne">
                 Our Story
               </Link>
-            </div>
-
-            {/* Mobile-only pills below CTAs */}
-            <div className="hero-pills flex sm:hidden flex-wrap gap-2 mt-6 justify-center">
-              {["Genuine Devices", "Expert Service", "Nationwide Delivery"].map((label) => (
-                <span key={label}
-                  className="font-syne text-[9px] text-white/40 border border-white/10 px-3 py-1 rounded-full tracking-wide">
-                  {label}
-                </span>
-              ))}
             </div>
 
           </div>
