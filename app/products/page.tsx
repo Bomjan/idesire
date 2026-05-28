@@ -78,7 +78,7 @@ function FeedCard({ product, index, total }: { product: Product; index: number; 
           <div className="h-px flex-1 bg-white/10" />
         </div>
 
-        <h2 className="font-bebas text-white leading-none" style={{ fontSize: "clamp(2.2rem, 9vw, 3rem)" }}>
+        <h2 className="font-bebas text-white leading-none" style={{ fontSize: "clamp(1.8rem, 7vw, 2.4rem)" }}>
           {product.name}
         </h2>
         <p className="font-syne text-white/40 text-[12px] mt-1 mb-5 leading-snug">
