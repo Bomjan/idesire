@@ -208,7 +208,7 @@ function ProductsContent() {
           top: 48px (navbar) + 64px (category bar) = 112px
           bottom: 56px (tab bar)                                        */}
       <div
-        className="sm:hidden fixed left-0 right-0 overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
+        className="sm:hidden fixed left-0 right-0 overflow-y-scroll snap-y snap-mandatory scrollbar-hide bg-black"
         style={{ top: "112px", bottom: "56px" }}
       >
         {filtered.length > 0 ? filtered.map((product, i) => (
@@ -243,7 +243,7 @@ function ProductsContent() {
 
 export default function ProductsPage() {
   return (
-    <>
+    <div className="bg-black sm:bg-transparent min-h-screen">
       {/* Header — hidden on mobile to maximise feed space */}
       <section className="hidden sm:block bg-black pt-28 pb-16 px-6">
         <div className="max-w-7xl mx-auto">
@@ -264,13 +264,13 @@ export default function ProductsPage() {
 
       <Suspense
         fallback={
-          <div className="bg-white min-h-screen flex items-center justify-center">
-            <div className="w-5 h-5 border-2 border-black/10 border-t-black rounded-full animate-spin" />
+          <div className="bg-black sm:bg-white min-h-screen flex items-center justify-center">
+            <div className="w-5 h-5 border-2 border-white/10 border-t-white sm:border-black/10 sm:border-t-black rounded-full animate-spin" />
           </div>
         }
       >
         <ProductsContent />
       </Suspense>
-    </>
+    </div>
   );
 }
