@@ -62,6 +62,7 @@ export default function Navbar() {
   const [sheetOpen, setSheetOpen] = useState(false);
   const pathname = usePathname();
   const overflowActive = overflowLinks.some((l) => l.href === pathname && l.href !== "/");
+  const forceDark = pathname === "/products";
 
   const allDesktopLinks = [...pillLinks, ...overflowLinks];
 
@@ -70,7 +71,9 @@ export default function Navbar() {
       {/* ── Top bar ── */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? "bg-black/92 backdrop-blur-xl border-b border-white/08" : "bg-transparent"
+          scrolled || forceDark
+            ? "bg-black/92 backdrop-blur-xl border-b border-white/08"
+            : "bg-transparent"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 h-12 flex items-center justify-between">
