@@ -148,39 +148,68 @@ function ProductsContent() {
 
   return (
     <>
-      {/* Filter bar
-          Mobile:  fixed below navbar (top-12 = 48px), h-12 = 48px
-          Desktop: sticky top-12                                      */}
-      <div className="fixed sm:sticky top-12 left-0 right-0 z-30 h-12 bg-white border-b border-black/08 flex items-center">
-        <div className="w-full sm:max-w-7xl sm:mx-auto px-3 sm:px-6">
+      {/* ── Category bar ──
+          Mobile:  fixed, dark, editorial — flush under navbar
+          Desktop: sticky, white, standard
+          Heights: mobile h-16 (64px), desktop h-12 (48px)            */}
+
+      {/* Mobile editorial bar */}
+      <div className="sm:hidden fixed top-12 left-0 right-0 z-30 h-16 bg-black border-b border-white/08 flex items-end pb-2 px-4">
+        <div className="flex items-end gap-0 overflow-x-auto scrollbar-hide w-full">
+          {(["All", ...categories] as const).map((cat, i) => {
+            const isActive = active === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setActive(cat as typeof active)}
+                className="relative flex-shrink-0 flex flex-col items-start pr-6 transition-all duration-200 group"
+              >
+                <span className={`font-syne text-[8px] uppercase tracking-[0.3em] mb-0.5 transition-colors ${isActive ? "text-apple-blue" : "text-white/20"}`}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className={`font-bebas text-[1.35rem] leading-none tracking-wide transition-colors ${isActive ? "text-white" : "text-white/30 group-hover:text-white/60"}`}>
+                  {cat}
+                </span>
+                {isActive && (
+                  <span className="absolute -bottom-2 left-0 right-6 h-[1px] bg-apple-blue" />
+                )}
+              </button>
+            );
+          })}
+          <span className="ml-auto flex-shrink-0 font-syne text-[9px] text-white/20 uppercase tracking-widest self-end pb-0.5">
+            {filtered.length} items
+          </span>
+        </div>
+      </div>
+
+      {/* Desktop filter bar */}
+      <div className="hidden sm:flex sticky top-12 z-30 h-12 bg-white border-b border-black/08 items-center">
+        <div className="w-full max-w-7xl mx-auto px-6">
           <div className="flex items-center gap-0 overflow-x-auto scrollbar-hide">
             {(["All", ...categories] as const).map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActive(cat as typeof active)}
-                className={`flex-shrink-0 px-4 sm:px-5 h-12 text-[11px] font-bold uppercase tracking-widest transition-all duration-200 font-syne border-b-2 ${
-                  active === cat
-                    ? "border-black text-black"
-                    : "border-transparent text-black/30 hover:text-black"
+                className={`flex-shrink-0 px-5 h-12 text-[11px] font-bold uppercase tracking-widest transition-all duration-200 font-syne border-b-2 ${
+                  active === cat ? "border-black text-black" : "border-transparent text-black/30 hover:text-black"
                 }`}
               >
                 {cat}
               </button>
             ))}
-            <span className="ml-auto text-[11px] font-syne text-black/30 uppercase tracking-widest pr-3 flex-shrink-0">
-              {filtered.length}
+            <span className="ml-auto text-[11px] font-syne text-black/30 uppercase tracking-widest pr-2 flex-shrink-0">
+              {filtered.length} items
             </span>
           </div>
         </div>
       </div>
 
-      {/* Mobile: vertical snap feed
-          top-24  = 96px  (navbar 48 + filter 48)
-          bottom-14 = 56px (tab bar)
-          → fills exactly the visible space, zero dead pixels            */}
+      {/* Mobile snap feed
+          top: 48px (navbar) + 64px (category bar) = 112px
+          bottom: 56px (tab bar)                                        */}
       <div
         className="sm:hidden fixed left-0 right-0 overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
-        style={{ top: "96px", bottom: "56px" }}
+        style={{ top: "112px", bottom: "56px" }}
       >
         {filtered.length > 0 ? filtered.map((product, i) => (
           <FeedCard key={product.id} product={product} index={i} total={filtered.length} />
