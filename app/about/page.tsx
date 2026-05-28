@@ -19,10 +19,10 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative bg-black min-h-[70vh] flex items-end pb-20 px-6 pt-32 overflow-hidden">
+      <section className="relative bg-black min-h-[60vh] sm:min-h-[70vh] flex items-end pb-14 px-4 sm:pb-20 sm:px-6 pt-24 sm:pt-32 overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1611186871525-17fcf3c55a4e?w=1600&q=85"
+            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1600&q=85"
             alt="About iDesire"
             fill
             className="object-cover opacity-20"
@@ -45,8 +45,8 @@ export default function AboutPage() {
       </section>
 
       {/* Story */}
-      <section className="bg-white py-24 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20 items-center">
+      <section className="bg-white py-16 px-4 sm:py-24 sm:px-6">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-10 md:gap-20 items-center">
           <ScrollReveal3D>
             <h2
               className="font-bebas text-black leading-[0.92] mb-8"
@@ -83,7 +83,7 @@ export default function AboutPage() {
       </section>
 
       {/* Milestones */}
-      <section className="bg-black py-24 px-6">
+      <section className="bg-black py-16 px-4 sm:py-24 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal3D className="mb-16">
             <h2
@@ -112,7 +112,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="bg-white py-24 px-6">
+      <section className="bg-white py-16 px-4 sm:py-24 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal3D className="mb-16">
             <h2
@@ -146,25 +146,25 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="bg-black py-24 px-6 text-center">
+      <section className="bg-black py-20 px-4 sm:py-24 sm:px-6 text-center">
         <ScrollReveal3D>
           <div className="max-w-xl mx-auto">
             <h2
               className="font-bebas text-white mb-6 leading-[0.9]"
-              style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)" }}
+              style={{ fontSize: "clamp(2.5rem, 7vw, 5.5rem)" }}
             >
               FIND YOUR NEXT APPLE DEVICE.
             </h2>
-            <div className="flex justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-3 bg-white text-black text-[12px] font-bold uppercase tracking-widest px-8 py-4 hover:bg-apple-gray active:scale-[0.97] transition-all font-syne"
+                className="inline-flex items-center justify-center gap-3 w-full sm:w-auto bg-white text-black text-[12px] font-bold uppercase tracking-widest px-8 py-4 hover:bg-apple-gray active:scale-[0.97] transition-all font-syne"
               >
                 Shop Now
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-3 border border-white/25 text-white text-[12px] font-semibold uppercase tracking-widest px-8 py-4 hover:border-white active:scale-[0.97] transition-all font-syne"
+                className="inline-flex items-center justify-center gap-3 w-full sm:w-auto border border-white/25 text-white text-[12px] font-semibold uppercase tracking-widest px-8 py-4 hover:border-white active:scale-[0.97] transition-all font-syne"
               >
                 Find the Store
               </Link>

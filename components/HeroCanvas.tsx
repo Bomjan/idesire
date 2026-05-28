@@ -74,7 +74,6 @@ attribute float aSeed;
 uniform float uMorphT;
 uniform float uTime;
 uniform float uDpr;
-uniform vec2  uMouseWorld;
 
 varying vec3  vCol;
 varying float vAlpha;
@@ -82,20 +81,11 @@ varying float vAlpha;
 float easeOut3(float t){ return 1. - pow(1.-clamp(t,.0,1.), 3.); }
 
 void main(){
-  // Stem-outward formation stagger
   float stemDist = length(aTo.xy - vec2(0., 2.6)) / 7.5;
   float delay    = stemDist * 0.30;
   float e        = easeOut3((uMorphT - delay) / (1.0 - delay));
 
   vec3 pos = mix(aFrom, aTo, e);
-
-  float formed   = smoothstep(0.88, 1.0, uMorphT);
-  float mDist    = length(pos.xy - uMouseWorld);
-
-  // ── Magnetic pull (medium ring, 1.5 – 4.0 units) ────────────────────────
-  float magRing  = smoothstep(4.0, 1.2, mDist) * smoothstep(0.8, 1.5, mDist) * formed;
-  vec2  toMouse  = uMouseWorld - pos.xy;
-  pos.xy += toMouse * magRing * 0.22;
 
   vec4 mv = modelViewMatrix * vec4(pos, 1.);
   gl_Position  = projectionMatrix * mv;
@@ -248,10 +238,9 @@ export default function HeroCanvas() {
     geo.boundingSphere = new THREE.Sphere(new THREE.Vector3(), 12);
 
     const logoUni = {
-      uMorphT:     { value: 0 },
-      uTime:       { value: 0 },
-      uDpr:        { value: DPR },
-      uMouseWorld: { value: new THREE.Vector2(999, 999) },
+      uMorphT: { value: 0 },
+      uTime:   { value: 0 },
+      uDpr:    { value: DPR },
     };
     const logoPoints = new THREE.Points(geo, new THREE.ShaderMaterial({
       vertexShader: LOGO_VERT, fragmentShader: LOGO_FRAG, uniforms: logoUni,
@@ -328,17 +317,20 @@ export default function HeroCanvas() {
     const scrollMorphT = () =>
       Math.min(Math.max((window.scrollY / window.innerHeight - 0.05) / 0.75, 0), 1);
 
-    const onMove = (e: MouseEvent) => {
-      mouseScreenX = e.clientX;
-      mouseScreenY = e.clientY;
+    const onMove  = (e: MouseEvent) => { mouseScreenX = e.clientX; mouseScreenY = e.clientY; };
+    const onLeave = () => {
+      wanderUni.uMouseWorld.value.set(999, 999);
+      wanderUni.uMouseVel.value.set(0, 0);
+      mouseVelX = 0; mouseVelY = 0;
     };
     const onResize = () => {
       W = el.clientWidth; H = el.clientHeight;
       camera.aspect = W/H; camera.updateProjectionMatrix();
       renderer.setSize(W,H); composer.setSize(W,H); bloom.resolution.set(W,H);
     };
-    window.addEventListener("mousemove", onMove,   { passive: true });
-    window.addEventListener("resize",    onResize);
+    el.addEventListener("mousemove",  onMove,   { passive: true });
+    el.addEventListener("mouseleave", onLeave,  { passive: true });
+    window.addEventListener("resize", onResize);
 
     let id = 0;
     const frame = () => {
@@ -353,32 +345,42 @@ export default function HeroCanvas() {
       wanderUni.uTime.value = elapsed;
       blueUni.uTime.value   = elapsed;
 
-      // Project mouse to world at z=0
-      mouseNDC.set((mouseScreenX/W)*2-1, -(mouseScreenY/H)*2+1);
-      raycaster.setFromCamera(mouseNDC, camera);
-      raycaster.ray.intersectPlane(hoverPlane, worldHitPos);
-      logoUni.uMouseWorld.value.set(worldHitPos.x, worldHitPos.y);
-      wanderUni.uMouseWorld.value.set(worldHitPos.x, worldHitPos.y);
+      // Only apply mouse interactions when canvas is visible in the viewport
+      const rect = el.getBoundingClientRect();
+      const canvasVisible = rect.bottom > 0 && rect.top < H;
 
-      // Smoothed mouse velocity in world units
-      const rawVx = (mouseScreenX - prevMouseX) / W * 28;
-      const rawVy = -(mouseScreenY - prevMouseY) / H * 28;
-      mouseVelX += (rawVx - mouseVelX) * 0.18;
-      mouseVelY += (rawVy - mouseVelY) * 0.18;
-      prevMouseX = mouseScreenX; prevMouseY = mouseScreenY;
-      wanderUni.uMouseVel.value.set(mouseVelX, mouseVelY);
+      if (canvasVisible) {
+        // Project mouse to world at z=0 (for wandering particles only)
+        mouseNDC.set((mouseScreenX/W)*2-1, -(mouseScreenY/H)*2+1);
+        raycaster.setFromCamera(mouseNDC, camera);
+        raycaster.ray.intersectPlane(hoverPlane, worldHitPos);
+        wanderUni.uMouseWorld.value.set(worldHitPos.x, worldHitPos.y);
+
+        const rawVx = (mouseScreenX - prevMouseX) / W * 28;
+        const rawVy = -(mouseScreenY - prevMouseY) / H * 28;
+        mouseVelX += (rawVx - mouseVelX) * 0.18;
+        mouseVelY += (rawVy - mouseVelY) * 0.18;
+        prevMouseX = mouseScreenX; prevMouseY = mouseScreenY;
+        wanderUni.uMouseVel.value.set(mouseVelX, mouseVelY);
+      } else {
+        wanderUni.uMouseWorld.value.set(999, 999);
+        wanderUni.uMouseVel.value.set(0, 0);
+        mouseVelX = 0; mouseVelY = 0;
+      }
 
       // Rotation: stops completely once logo is formed
       rotY += dt * .008 * (1 - morphCur);
       logoPoints.rotation.y  = rotY;
       // no object rotation on wandering particles — keeps z-depth stable
 
-      // Mouse parallax (fades as logo locks in)
-      const mx = (mouseScreenX/W - .5) * 2;
-      const my = -(mouseScreenY/H - .5) * 2;
-      const tilt = 1 - morphCur * .92;
-      logoPoints.rotation.x += (my*.09*tilt - logoPoints.rotation.x) * .05;
-      logoPoints.rotation.z += (-mx*.04*tilt - logoPoints.rotation.z) * .05;
+      // Mouse parallax only while canvas is visible
+      if (canvasVisible) {
+        const mx = (mouseScreenX/W - .5) * 2;
+        const my = -(mouseScreenY/H - .5) * 2;
+        const tilt = 1 - morphCur * .92;
+        logoPoints.rotation.x += (my*.09*tilt - logoPoints.rotation.x) * .05;
+        logoPoints.rotation.z += (-mx*.04*tilt - logoPoints.rotation.z) * .05;
+      }
 
       const targetZ = 15 - morphCur * 4;
       const dz = targetZ - camera.position.z;
@@ -390,7 +392,8 @@ export default function HeroCanvas() {
 
     return () => {
       cancelAnimationFrame(id);
-      window.removeEventListener("mousemove", onMove);
+      el.removeEventListener("mousemove",  onMove);
+      el.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("resize",    onResize);
       composer.dispose(); renderer.dispose();
       bGeo.dispose();

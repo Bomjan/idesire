@@ -28,7 +28,7 @@ const categoryBlocks = [
     sub: "Your canvas. Anywhere.",
     image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=800&q=85",
     span: "lg:col-span-1",
-    aspect: "aspect-square",
+    aspect: "aspect-[3/4]",
   },
   {
     slug: "Accessories",
@@ -36,7 +36,7 @@ const categoryBlocks = [
     sub: "Complete the collection.",
     image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=800&q=85",
     span: "lg:col-span-1",
-    aspect: "aspect-square",
+    aspect: "aspect-[3/4]",
   },
 ];
 
@@ -49,7 +49,7 @@ export default function HomePage() {
       <HeroSection />
 
       {/* THE COLLECTION — editorial grid, no borders */}
-      <section className="bg-white py-20 px-6">
+      <section className="bg-white py-14 px-4 sm:py-20 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal3D className="flex items-end justify-between mb-10">
             <h2 className="font-bebas text-black" style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)", lineHeight: 0.95 }}>
@@ -64,41 +64,36 @@ export default function HomePage() {
           </ScrollReveal3D>
 
           {/* Asymmetric editorial grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {categoryBlocks.map((cat, i) => (
               <ScrollReveal3D key={cat.slug} delay={i * 70} rotateX={14} className={cat.span}>
-                <Tilt3D intensity={10} perspective={1000} scale={1.02} shine className="h-full">
-                  <Link
-                    href={`/products?category=${cat.slug}`}
-                    className={`group relative block overflow-hidden bg-black ${cat.aspect} h-full`}
-                  >
-                    <Image
-                      src={cat.image}
-                      alt={cat.label}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-[1.06] opacity-85 group-hover:opacity-100"
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    />
-                    {/* Gradient for text legibility */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-
-                    {/* Text */}
-                    <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7">
-                      <p className="font-bebas text-white mb-0.5" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", lineHeight: 0.95 }}>
-                        {cat.label.toUpperCase()}
-                      </p>
-                      <p className="font-syne text-[12px] text-white/50 uppercase tracking-widest mb-4">
-                        {cat.sub}
-                      </p>
-                      <span className="inline-flex items-center gap-2 font-syne text-[11px] font-bold uppercase tracking-widest text-white border-b border-white/40 pb-0.5 group-hover:border-white transition-colors">
-                        Shop
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                      </span>
-                    </div>
-                  </Link>
-                </Tilt3D>
+                <Link
+                  href={`/products?category=${cat.slug}`}
+                  className={`group relative block overflow-hidden bg-black w-full ${cat.aspect} h-full`}
+                >
+                  <Image
+                    src={cat.image}
+                    alt={cat.label}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-[1.06] opacity-85 group-hover:opacity-100"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-5 md:p-7">
+                    <p className="font-bebas text-white mb-0.5" style={{ fontSize: "clamp(2rem, 4vw, 3rem)", lineHeight: 0.95 }}>
+                      {cat.label.toUpperCase()}
+                    </p>
+                    <p className="font-syne text-[12px] text-white/50 uppercase tracking-widest mb-4">
+                      {cat.sub}
+                    </p>
+                    <span className="inline-flex items-center gap-2 font-syne text-[11px] font-bold uppercase tracking-widest text-white border-b border-white/40 pb-0.5 group-hover:border-white transition-colors">
+                      Shop
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </span>
+                  </div>
+                </Link>
               </ScrollReveal3D>
             ))}
           </div>
@@ -106,7 +101,7 @@ export default function HomePage() {
       </section>
 
       {/* FEATURED — editorial spotlight */}
-      <section className="bg-black py-20 px-6">
+      <section className="bg-black py-14 px-4 sm:py-20 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal3D>
             <div className="grid md:grid-cols-2 gap-0 overflow-hidden">
@@ -122,7 +117,7 @@ export default function HomePage() {
               </div>
 
               {/* Text side */}
-              <div className="bg-[#0a0a0a] flex flex-col justify-between p-10 md:p-14 min-h-[320px]">
+              <div className="bg-[#0a0a0a] flex flex-col justify-between p-7 sm:p-10 md:p-14 min-h-[280px] md:min-h-[320px]">
                 <div>
                   <p className="font-syne text-[10px] font-semibold text-apple-blue uppercase tracking-[0.25em] mb-6">
                     Staff Pick · {featuredProduct.category}
@@ -140,7 +135,7 @@ export default function HomePage() {
                     {formatPrice(featuredProduct.price)}
                   </p>
                 </div>
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-3 w-full sm:max-w-xs">
                   <Link
                     href="/products"
                     className="inline-flex items-center justify-between bg-white text-black text-[12px] font-bold uppercase tracking-widest px-7 py-4 hover:bg-apple-gray active:scale-[0.97] transition-all font-syne"
@@ -166,7 +161,7 @@ export default function HomePage() {
       </section>
 
       {/* WHY IDESIRE — bold numbered list on black */}
-      <section className="bg-black py-20 px-6 border-t border-white/06">
+      <section className="bg-black py-14 px-4 sm:py-20 sm:px-6 border-t border-white/06">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal3D className="mb-16">
             <h2
@@ -205,7 +200,7 @@ export default function HomePage() {
       </section>
 
       {/* NEW IN — horizontal product strip */}
-      <section className="bg-white py-20 px-6">
+      <section className="bg-white py-14 px-4 sm:py-20 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal3D className="flex items-end justify-between mb-10">
             <h2
@@ -243,10 +238,10 @@ export default function HomePage() {
                       <p className="font-syne text-[10px] uppercase tracking-[0.18em] text-apple-mid mb-1">
                         {product.category}
                       </p>
-                      <p className="font-syne font-black text-black uppercase text-[13px] leading-tight tracking-tight">
+                      <p className="font-sf font-semibold text-black text-[14px] leading-snug tracking-[-0.01em]">
                         {product.name}
                       </p>
-                      <p className="font-syne font-semibold text-black text-[13px] mt-1">
+                      <p className="font-sf text-[13px] mt-0.5" style={{ color: "#6e6e73" }}>
                         {formatPrice(product.price)}
                       </p>
                     </div>
@@ -259,7 +254,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA STRIP — full black, massive type */}
-      <section className="bg-black py-28 px-6 text-center overflow-hidden relative">
+      <section className="bg-black py-20 px-4 sm:py-28 sm:px-6 text-center overflow-hidden relative">
         <div
           className="absolute inset-0 opacity-[0.03] pointer-events-none"
           style={{
@@ -278,10 +273,10 @@ export default function HomePage() {
             <p className="font-syne text-white/35 text-[14px] mb-12 max-w-sm mx-auto">
               Come see the full lineup in person. Norzin Lam, Thimphu.
             </p>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-3 bg-white text-black text-[12px] font-bold uppercase tracking-widest px-10 py-4 hover:bg-apple-gray active:scale-[0.97] transition-all font-syne"
+                className="inline-flex items-center justify-center gap-3 bg-white text-black text-[12px] font-bold uppercase tracking-widest px-10 py-4 hover:bg-apple-gray active:scale-[0.97] transition-all font-syne"
               >
                 Get Directions
               </Link>
@@ -289,7 +284,7 @@ export default function HomePage() {
                 href="https://wa.me/97517000000"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-3 border border-white/25 text-white text-[12px] font-semibold uppercase tracking-widest px-10 py-4 hover:border-white active:scale-[0.97] transition-all font-syne"
+                className="inline-flex items-center justify-center gap-3 border border-white/25 text-white text-[12px] font-semibold uppercase tracking-widest px-10 py-4 hover:border-white active:scale-[0.97] transition-all font-syne"
               >
                 WhatsApp
               </a>

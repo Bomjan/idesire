@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback, useState, ReactNode } from "react";
+import { useRef, useCallback, useState, useEffect, ReactNode } from "react";
 
 interface Tilt3DProps {
   children: ReactNode;
@@ -23,6 +23,11 @@ export default function Tilt3D({
   const rafRef = useRef<number>(0);
   const [shinePos, setShinePos] = useState({ x: 50, y: 50 });
   const [hovered, setHovered] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(hover: none)").matches);
+  }, []);
 
   const onMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
@@ -66,10 +71,10 @@ export default function Tilt3D({
     <div
       ref={ref}
       className={`relative ${className}`}
-      style={{ transformStyle: "preserve-3d", willChange: "transform" }}
-      onMouseMove={onMouseMove}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      style={{ transformStyle: "preserve-3d", willChange: isTouch ? "auto" : "transform" }}
+      onMouseMove={isTouch ? undefined : onMouseMove}
+      onMouseEnter={isTouch ? undefined : onMouseEnter}
+      onMouseLeave={isTouch ? undefined : onMouseLeave}
     >
       {children}
 

@@ -22,8 +22,8 @@ function ProductsContent() {
     <>
       {/* Filter bar */}
       <div className="sticky top-12 z-30 bg-white border-b border-black/08">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center gap-0 overflow-x-auto">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6">
+          <div className="flex items-center gap-0 overflow-x-auto scrollbar-hide">
             {(["All", ...categories] as const).map((cat) => (
               <button
                 key={cat}
@@ -45,9 +45,9 @@ function ProductsContent() {
       </div>
 
       {/* Grid */}
-      <section className="bg-white min-h-screen py-14 px-6">
+      <section className="bg-white min-h-screen py-6 px-3 sm:py-14 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-10">
+          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-3 gap-y-8 sm:gap-x-5 sm:gap-y-10">
             {filtered.map((product, i) => (
               <ScrollReveal3D key={product.id} delay={Math.min(i * 55, 350)} rotateX={16}>
                 <ProductCard product={product} />
@@ -70,7 +70,7 @@ export default function ProductsPage() {
   return (
     <>
       {/* Header */}
-      <section className="bg-black pt-28 pb-16 px-6">
+      <section className="bg-black pt-24 pb-12 px-4 sm:pt-28 sm:pb-16 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <p className="font-syne text-[10px] font-semibold text-apple-blue uppercase tracking-[0.25em] mb-5 animate-fade-up">
             iDesire Store

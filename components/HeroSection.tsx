@@ -56,14 +56,18 @@ export default function HeroSection() {
         {/* Canvas */}
         <div className="absolute inset-0 z-0"><HeroCanvas /></div>
 
-        {/* Left vignette */}
-        <div className="absolute inset-0 z-[1] pointer-events-none" style={{
+        {/* Full-screen mobile overlay — ensures text is always legible */}
+        <div className="absolute inset-0 z-[1] pointer-events-none lg:hidden"
+          style={{ background: "rgba(0,0,0,0.58)" }} />
+
+        {/* Left vignette (desktop) */}
+        <div className="absolute inset-0 z-[1] pointer-events-none hidden lg:block" style={{
           background: "linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.60) 24%, rgba(0,0,0,0.18) 40%, transparent 52%)",
         }} />
 
         {/* ── Left: text ─────────────────────────────────────────────────────── */}
-        <div ref={textRef} className="relative z-10 w-full max-w-7xl mx-auto px-8 h-full flex items-center">
-          <div className="max-w-[46%]">
+        <div ref={textRef} className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 h-full flex items-center pt-14">
+          <div className="w-full max-w-full sm:max-w-[75%] lg:max-w-[46%]">
 
             {/* Apple wordmark icon */}
             <div className="hero-logo mb-7">
@@ -81,7 +85,7 @@ export default function HeroSection() {
 
             {/* Headline */}
             <h1 className="hero-h1 font-bebas leading-[0.90] mb-8"
-              style={{ fontSize: "clamp(4.2rem, 11vw, 9rem)" }}>
+              style={{ fontSize: "clamp(3rem, 11vw, 9rem)" }}>
               <span className="text-white block">EXPERIENCE</span>
 
               {/* "APPLE." — metallic gradient */}
@@ -112,7 +116,7 @@ export default function HeroSection() {
             </div>
 
             {/* CTAs */}
-            <div className="hero-ctas flex flex-wrap gap-3">
+            <div className="hero-ctas flex flex-col sm:flex-row flex-wrap gap-3">
               <Link href="/products"
                 className="inline-flex items-center gap-2.5 bg-white text-black text-[11px] font-bold uppercase tracking-widest px-7 py-3.5 hover:bg-apple-gray active:scale-[0.97] transition-all duration-150 font-syne">
                 Shop Now

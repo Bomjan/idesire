@@ -37,11 +37,11 @@ export default function ProductCard({ product }: Props) {
             </span>
           )}
 
-          {/* Hover overlay with Add to Cart */}
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-all duration-400 flex items-end p-4">
+          {/* Add to Cart — always visible on mobile, hover-reveal on desktop */}
+          <div className="absolute inset-0 bg-black/0 sm:group-hover:bg-black/25 transition-all duration-400 flex items-end p-3 sm:p-4">
             <button
               onClick={(e) => { e.preventDefault(); addItem(product); }}
-              className="w-full bg-white text-black text-[11px] font-bold uppercase tracking-widest py-3 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300 hover:bg-apple-gray active:scale-[0.97] font-syne"
+              className="w-full bg-white text-black text-[10px] sm:text-[11px] font-bold uppercase tracking-widest py-2.5 sm:py-3 sm:translate-y-2 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100 transition-all duration-300 hover:bg-apple-gray active:scale-[0.97] font-syne"
             >
               Add to Cart
             </button>
@@ -55,10 +55,10 @@ export default function ProductCard({ product }: Props) {
               <p className="font-syne text-[10px] uppercase tracking-[0.18em] text-apple-mid mb-1">
                 {product.category}
               </p>
-              <h3 className="font-syne font-black text-black uppercase text-[13px] leading-tight tracking-tight">
+              <h3 className="font-sf font-semibold text-black text-[14px] leading-snug tracking-[-0.01em]">
                 {product.name}
               </h3>
-              <p className="font-syne font-semibold text-black text-[13px] mt-1">
+              <p className="font-sf text-black text-[13px] font-normal mt-0.5" style={{ color: "#6e6e73" }}>
                 {formatPrice(product.price)}
               </p>
             </div>

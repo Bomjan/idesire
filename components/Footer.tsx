@@ -5,9 +5,9 @@ export default function Footer() {
 
   return (
     <footer className="bg-black border-t border-white/08">
-      <div className="max-w-7xl mx-auto px-6 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-14">
-          <div className="col-span-1">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-10 sm:mb-14">
+          <div className="col-span-2 md:col-span-1">
             <span className="font-bebas text-white text-3xl tracking-wider block mb-4">
               iDesire
             </span>
@@ -60,8 +60,8 @@ export default function Footer() {
               Visit
             </p>
             <address className="not-italic font-syne text-[13px] text-white/50 space-y-2">
-              <p>Norzin Lam</p>
-              <p>Thimphu, Bhutan 11001</p>
+              <p>Wangchhu Lam</p>
+              <p>Thimphu, Bhutan</p>
               <a href="https://wa.me/97517000000" className="block mt-3 hover:text-white transition-colors">+975 17 000 000</a>
               <a href="mailto:hello@idesire.bt" className="block hover:text-white transition-colors">hello@idesire.bt</a>
             </address>
