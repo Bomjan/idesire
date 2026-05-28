@@ -111,9 +111,8 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* ── Mobile tab bar — fixed height h-14 = 56px ── */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-black/85 backdrop-blur-2xl border-t border-white/10">
-        <div className="flex items-center w-full overflow-hidden h-14">
+      {/* ── Mobile tab bar — exactly h-14 = 56px, no extra divs ── */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 h-14 bg-black/85 backdrop-blur-2xl border-t border-white/10 flex items-center overflow-hidden">
 
           {pillLinks.map((l) => {
             const active = pathname === l.href;
@@ -170,9 +169,6 @@ export default function Navbar() {
               More
             </span>
           </button>
-        </div>
-        {/* iOS safe area spacer */}
-        <div className="h-safe-bottom bg-transparent" style={{ height: "env(safe-area-inset-bottom)" }} />
       </div>
 
       {/* ── Overflow sheet ── */}
