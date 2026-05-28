@@ -60,6 +60,7 @@ export default function Navbar() {
   const { totalItems, toggleCart } = useCart();
   const [sheetOpen, setSheetOpen] = useState(false);
   const pathname = usePathname();
+  const overflowActive = overflowLinks.some((l) => l.href === pathname);
 
   const allDesktopLinks = [...pillLinks, ...overflowLinks];
 
@@ -119,18 +120,22 @@ export default function Navbar() {
               <Link
                 key={l.href}
                 href={l.href}
-                className={`flex flex-col items-center gap-1 px-4 py-2 rounded-full transition-all duration-200 ${
+                className={`relative flex flex-col items-center px-4 py-2 rounded-full transition-all duration-200 ${
                   active
-                    ? "bg-white/10 text-white"
+                    ? "bg-[rgba(255,255,255,0.10)] text-white"
                     : "text-white/40 hover:text-white/70"
                 }`}
               >
-                <span className={`transition-colors ${active ? "text-apple-blue" : ""}`}>
+                <span className={`transition-colors mb-1 ${active ? "text-apple-blue" : ""}`}>
                   {l.icon}
                 </span>
-                <span className="font-syne text-[9px] uppercase tracking-widest leading-none">
+                <span className={`font-syne text-[9px] uppercase tracking-widest leading-none transition-colors ${active ? "text-apple-blue" : ""}`}>
                   {l.label}
                 </span>
+                {/* Active indicator — blue bar at bottom of pill */}
+                {active && (
+                  <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full bg-apple-blue" />
+                )}
               </Link>
             );
           })}
@@ -141,13 +146,13 @@ export default function Navbar() {
           {/* Cart */}
           <button
             onClick={toggleCart}
-            className="relative flex flex-col items-center gap-1 px-4 py-2 rounded-full text-white/40 hover:text-white/70 transition-colors"
+            className="relative flex flex-col items-center px-4 py-2 rounded-full text-white/40 hover:text-white/70 transition-colors"
             aria-label="Cart"
           >
             <IconBag />
-            <span className="font-syne text-[9px] uppercase tracking-widest leading-none">Cart</span>
+            <span className="font-syne text-[9px] uppercase tracking-widest leading-none mt-1">Cart</span>
             {totalItems > 0 && (
-              <span className="absolute top-1.5 right-2.5 bg-apple-blue text-white text-[8px] font-bold w-3.5 h-3.5 flex items-center justify-center rounded-full leading-none">
+              <span className="absolute top-1 right-2 bg-apple-blue text-white text-[8px] font-bold w-3.5 h-3.5 flex items-center justify-center rounded-full leading-none">
                 {totalItems > 9 ? "9+" : totalItems}
               </span>
             )}
@@ -156,13 +161,20 @@ export default function Navbar() {
           {/* More (···) */}
           <button
             onClick={() => setSheetOpen(true)}
-            className={`flex flex-col items-center gap-1 px-4 py-2 rounded-full transition-all duration-200 ${
-              sheetOpen ? "bg-white/10 text-white" : "text-white/40 hover:text-white/70"
+            className={`relative flex flex-col items-center px-4 py-2 rounded-full transition-all duration-200 ${
+              sheetOpen || overflowActive
+                ? "bg-[rgba(255,255,255,0.10)] text-apple-blue"
+                : "text-white/40 hover:text-white/70"
             }`}
             aria-label="More"
           >
             <IconDots />
-            <span className="font-syne text-[9px] uppercase tracking-widest leading-none">More</span>
+            <span className={`font-syne text-[9px] uppercase tracking-widest leading-none mt-1 transition-colors ${sheetOpen || overflowActive ? "text-apple-blue" : ""}`}>
+              More
+            </span>
+            {(sheetOpen || overflowActive) && (
+              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full bg-apple-blue" />
+            )}
           </button>
         </div>
       </div>
