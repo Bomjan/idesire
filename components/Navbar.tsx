@@ -111,8 +111,8 @@ export default function Navbar() {
       </header>
 
       {/* ── Mobile pill nav ── */}
-      <div className="md:hidden fixed bottom-5 left-1/2 -translate-x-1/2 z-50">
-        <div className="flex items-center gap-0 bg-black/75 backdrop-blur-2xl border border-white/12 rounded-full px-1.5 py-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
+      <div className="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+        <div className="flex items-center bg-black/75 backdrop-blur-2xl border border-white/12 rounded-full px-2 py-2 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
 
           {pillLinks.map((l) => {
             const active = pathname === l.href;
@@ -120,38 +120,38 @@ export default function Navbar() {
               <Link
                 key={l.href}
                 href={l.href}
-                className={`relative flex flex-col items-center px-3 py-2 rounded-full transition-all duration-200 ${
+                className={`relative flex flex-col items-center justify-center w-14 py-2.5 rounded-full transition-all duration-200 ${
                   active
                     ? "bg-[rgba(255,255,255,0.10)] text-white"
                     : "text-white/40 hover:text-white/70"
                 }`}
               >
-                <span className={`transition-colors mb-1 ${active ? "text-apple-blue" : ""}`}>
+                <span className={`transition-colors mb-1.5 ${active ? "text-apple-blue" : ""}`}>
                   {l.icon}
                 </span>
-                <span className={`font-syne text-[8px] uppercase tracking-wider leading-none transition-colors ${active ? "text-apple-blue" : ""}`}>
+                <span className={`font-syne text-[9px] uppercase tracking-wide leading-none transition-colors ${active ? "text-apple-blue" : ""}`}>
                   {l.label}
                 </span>
                 {active && (
-                  <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-[2px] rounded-full bg-apple-blue" />
+                  <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full bg-apple-blue" />
                 )}
               </Link>
             );
           })}
 
           {/* Divider */}
-          <div className="w-px h-6 bg-white/10 mx-1 shrink-0" />
+          <div className="w-px h-7 bg-white/10 mx-1 shrink-0" />
 
           {/* Cart */}
           <button
             onClick={toggleCart}
-            className="relative flex flex-col items-center px-3 py-2 rounded-full text-white/40 hover:text-white/70 transition-colors"
+            className="relative flex flex-col items-center justify-center w-14 py-2.5 rounded-full text-white/40 hover:text-white/70 transition-colors"
             aria-label="Cart"
           >
             <IconBag />
-            <span className="font-syne text-[8px] uppercase tracking-wider leading-none mt-1">Cart</span>
+            <span className="font-syne text-[9px] uppercase tracking-wide leading-none mt-1.5">Cart</span>
             {totalItems > 0 && (
-              <span className="absolute top-1 right-1 bg-apple-blue text-white text-[7px] font-bold w-3 h-3 flex items-center justify-center rounded-full leading-none">
+              <span className="absolute top-1.5 right-2 bg-apple-blue text-white text-[8px] font-bold w-3.5 h-3.5 flex items-center justify-center rounded-full leading-none">
                 {totalItems > 9 ? "9+" : totalItems}
               </span>
             )}
@@ -160,7 +160,7 @@ export default function Navbar() {
           {/* More (···) */}
           <button
             onClick={() => setSheetOpen(true)}
-            className={`relative flex flex-col items-center px-3 py-2 rounded-full transition-all duration-200 ${
+            className={`relative flex flex-col items-center justify-center w-14 py-2.5 rounded-full transition-all duration-200 ${
               sheetOpen || overflowActive
                 ? "bg-[rgba(255,255,255,0.10)] text-apple-blue"
                 : "text-white/40 hover:text-white/70"
@@ -168,11 +168,11 @@ export default function Navbar() {
             aria-label="More"
           >
             <IconDots />
-            <span className={`font-syne text-[8px] uppercase tracking-wider leading-none mt-1 transition-colors ${sheetOpen || overflowActive ? "text-apple-blue" : ""}`}>
+            <span className={`font-syne text-[9px] uppercase tracking-wide leading-none mt-1.5 transition-colors ${sheetOpen || overflowActive ? "text-apple-blue" : ""}`}>
               More
             </span>
             {(sheetOpen || overflowActive) && (
-              <span className="absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-[2px] rounded-full bg-apple-blue" />
+              <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full bg-apple-blue" />
             )}
           </button>
         </div>
