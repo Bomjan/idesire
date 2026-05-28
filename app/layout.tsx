@@ -26,7 +26,8 @@ export default function RootLayout({
       <body className="flex flex-col min-h-full">
         <CartProvider>
           <Navbar />
-          <main className="flex-1 pb-24 md:pb-0">{children}</main>
+          {/* pb-14 = 56px matches tab bar h-14 on mobile */}
+          <main className="flex-1 pb-14 md:pb-0">{children}</main>
           <Footer />
           <CartDrawer />
         </CartProvider>

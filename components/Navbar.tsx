@@ -110,9 +110,9 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* ── Mobile tab bar ── */}
+      {/* ── Mobile tab bar — fixed height h-14 = 56px ── */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-black/85 backdrop-blur-2xl border-t border-white/10">
-        <div className="flex items-center w-full overflow-hidden">
+        <div className="flex items-center w-full overflow-hidden h-14">
 
           {pillLinks.map((l) => {
             const active = pathname === l.href;

@@ -148,15 +148,17 @@ function ProductsContent() {
 
   return (
     <>
-      {/* Filter bar */}
-      <div className="sticky top-12 z-30 bg-white border-b border-black/08">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6">
+      {/* Filter bar
+          Mobile:  fixed below navbar (top-12 = 48px), h-12 = 48px
+          Desktop: sticky top-12                                      */}
+      <div className="fixed sm:sticky top-12 left-0 right-0 z-30 h-12 bg-white border-b border-black/08 flex items-center">
+        <div className="w-full sm:max-w-7xl sm:mx-auto px-3 sm:px-6">
           <div className="flex items-center gap-0 overflow-x-auto scrollbar-hide">
             {(["All", ...categories] as const).map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActive(cat as typeof active)}
-                className={`flex-shrink-0 px-5 py-3.5 text-[11px] font-bold uppercase tracking-widest transition-all duration-200 font-syne border-b-2 ${
+                className={`flex-shrink-0 px-4 sm:px-5 h-12 text-[11px] font-bold uppercase tracking-widest transition-all duration-200 font-syne border-b-2 ${
                   active === cat
                     ? "border-black text-black"
                     : "border-transparent text-black/30 hover:text-black"
@@ -165,31 +167,32 @@ function ProductsContent() {
                 {cat}
               </button>
             ))}
-            <span className="ml-auto text-[11px] font-syne text-black/30 uppercase tracking-widest pr-2 flex-shrink-0">
-              {filtered.length} items
+            <span className="ml-auto text-[11px] font-syne text-black/30 uppercase tracking-widest pr-3 flex-shrink-0">
+              {filtered.length}
             </span>
           </div>
         </div>
       </div>
 
-      {/* Mobile: vertical snap feed */}
-      {filtered.length > 0 ? (
-        <div
-          className="sm:hidden overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
-          style={{ height: "calc(100dvh - 96px)" }}
-        >
-          {filtered.map((product, i) => (
-            <FeedCard key={product.id} product={product} index={i} total={filtered.length} />
-          ))}
-        </div>
-      ) : (
-        <div className="sm:hidden text-center py-24 text-black/30">
-          <p className="font-bebas text-4xl">No products found</p>
-        </div>
-      )}
+      {/* Mobile: vertical snap feed
+          top-24  = 96px  (navbar 48 + filter 48)
+          bottom-14 = 56px (tab bar)
+          → fills exactly the visible space, zero dead pixels            */}
+      <div
+        className="sm:hidden fixed left-0 right-0 overflow-y-scroll snap-y snap-mandatory scrollbar-hide"
+        style={{ top: "96px", bottom: "56px" }}
+      >
+        {filtered.length > 0 ? filtered.map((product, i) => (
+          <FeedCard key={product.id} product={product} index={i} total={filtered.length} />
+        )) : (
+          <div className="flex items-center justify-center h-full text-black/30">
+            <p className="font-bebas text-4xl">No products found</p>
+          </div>
+        )}
+      </div>
 
-      {/* Desktop: grid */}
-      <section className="hidden sm:block bg-white min-h-screen py-14 px-6">
+      {/* Desktop: grid (pushed down by filter bar height via pt-12) */}
+      <section className="hidden sm:block bg-white min-h-screen pt-12 py-14 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-5 gap-y-10">
             {filtered.map((product, i) => (
