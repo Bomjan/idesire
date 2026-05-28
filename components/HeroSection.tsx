@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -14,19 +14,10 @@ export default function HeroSection() {
   const textRef  = useRef<HTMLDivElement>(null);
   const cardRef  = useRef<HTMLDivElement>(null);
   const hintsRef = useRef<HTMLDivElement>(null);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 767px)");
-    setIsMobile(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Entrance — same on all screen sizes
+      // Entrance
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.from(".hero-logo",    { opacity: 0, y: 16, duration: 0.6 })
         .from(".hero-eyebrow", { opacity: 0, y: 20, duration: 0.7 }, "-=0.3")
@@ -36,43 +27,39 @@ export default function HeroSection() {
         .from(".hero-hints",   { opacity: 0,         duration: 0.5 }, "-=0.3")
         .from(".hero-card",    { opacity: 0, x: 24, duration: 0.8, ease: "power2.out" }, "-=0.6");
 
-      // Scroll fade — desktop only
-      if (!isMobile) {
-        ScrollTrigger.create({
-          trigger: "#hero-section",
-          start: "top top",
-          end: () => window.innerHeight * 0.38,
-          scrub: 0.5,
-          onUpdate: (self) => {
-            const p = 1 - self.progress;
-            if (textRef.current)  textRef.current.style.opacity  = String(p);
-            if (cardRef.current)  cardRef.current.style.opacity  = String(Math.max(p * 1.5 - 0.5, 0));
-            if (hintsRef.current) hintsRef.current.style.opacity = String(Math.max(p * 1.5 - 0.5, 0));
-          },
-        });
-      }
+      // Scroll fade
+      ScrollTrigger.create({
+        trigger: "#hero-section",
+        start: "top top",
+        end: () => window.innerHeight * 0.38,
+        scrub: 0.5,
+        onUpdate: (self) => {
+          const p = 1 - self.progress;
+          if (textRef.current)  textRef.current.style.opacity  = String(p);
+          if (cardRef.current)  cardRef.current.style.opacity  = String(Math.max(p * 1.5 - 0.5, 0));
+          if (hintsRef.current) hintsRef.current.style.opacity = String(Math.max(p * 1.5 - 0.5, 0));
+        },
+      });
     });
 
     return () => ctx.revert();
-  }, [isMobile]);
+  }, []);
 
   return (
-    <section
-      id="hero-section"
-      className="relative bg-black"
-      style={{ minHeight: isMobile ? "100vh" : "220vh" }}
-    >
+    /* Mobile: 100vh (no scroll waste), Desktop: 220vh (scroll-fade effect) */
+    <section id="hero-section" className="relative bg-black min-h-screen md:min-h-[220vh]">
+
       {/* Sticky viewport */}
       <div className="sticky top-0 h-screen overflow-hidden">
 
         {/* Canvas */}
         <div className="absolute inset-0 z-0"><HeroCanvas /></div>
 
-        {/* Overlay */}
+        {/* Mobile overlay */}
         <div className="absolute inset-0 z-[1] pointer-events-none lg:hidden"
           style={{ background: "rgba(0,0,0,0.62)" }} />
 
-        {/* Left vignette — desktop */}
+        {/* Desktop left vignette */}
         <div className="absolute inset-0 z-[1] pointer-events-none hidden lg:block" style={{
           background: "linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.60) 24%, rgba(0,0,0,0.18) 40%, transparent 52%)",
         }} />
@@ -81,7 +68,6 @@ export default function HeroSection() {
         <div
           ref={textRef}
           className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 h-full flex items-center pt-14
-            /* Mobile: center everything */
             justify-center md:justify-start text-center md:text-left"
         >
           <div className="w-full max-w-[90%] sm:max-w-[75%] lg:max-w-[46%]">
@@ -101,23 +87,19 @@ export default function HeroSection() {
             </p>
 
             {/* Headline */}
-            <h1
-              className="hero-h1 font-bebas leading-[0.90] mb-6 sm:mb-8"
-              style={{ fontSize: isMobile ? "clamp(3.2rem, 18vw, 5.5rem)" : "clamp(3rem, 11vw, 9rem)" }}
-            >
+            <h1 className="hero-h1 font-bebas leading-[0.90] mb-6 sm:mb-8"
+              style={{ fontSize: "clamp(3rem, 13vw, 9rem)" }}>
               <span className="text-white block">EXPERIENCE</span>
               <span className="block" style={{
                 background: "linear-gradient(140deg, #ffffff 0%, #c8c8cc 35%, #ffffff 55%, #a8a8ad 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-              }}>
-                APPLE.
-              </span>
+              }}>APPLE.</span>
               <span className="text-white/22 block">IN BHUTAN.</span>
             </h1>
 
-            {/* Pills — hidden on smallest screens to reduce clutter */}
+            {/* Pills — hidden on small mobile */}
             <div className="hero-pills hidden sm:flex flex-wrap gap-2 mb-8 justify-center md:justify-start">
               {["Genuine Devices", "Expert Service", "Nationwide Delivery"].map((label) => (
                 <span key={label}
@@ -142,7 +124,7 @@ export default function HeroSection() {
               </Link>
             </div>
 
-            {/* Mobile feature pills — shown below CTAs on small screens */}
+            {/* Mobile-only pills below CTAs */}
             <div className="hero-pills flex sm:hidden flex-wrap gap-2 mt-6 justify-center">
               {["Genuine Devices", "Expert Service", "Nationwide Delivery"].map((label) => (
                 <span key={label}
@@ -200,7 +182,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* ── Scroll hint — desktop only ── */}
+        {/* Scroll hint — desktop only */}
         <div ref={hintsRef} className="hero-hints hidden md:flex absolute bottom-8 left-8 z-10 items-center gap-3">
           <div className="flex flex-col items-center gap-1.5">
             <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
@@ -208,7 +190,7 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Mobile: swipe-up nudge */}
+        {/* Swipe nudge — mobile only */}
         <div className="md:hidden absolute bottom-8 left-0 right-0 z-10 flex flex-col items-center gap-1.5">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
             strokeWidth="1.5" strokeLinecap="round" className="text-white/20 animate-bounce">

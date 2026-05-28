@@ -25,7 +25,6 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
 }
 
 body {
@@ -33,7 +32,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: #ffffff;
   color: #1d1d1f;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 .font-syne {
